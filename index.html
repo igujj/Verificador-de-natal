@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de Natal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: black;
+            color: red;
+            font-size: 70px;
+        }
+        .resultado {
+            font-size: 50px; /* Tamanho da fonte da mensagem */
+            margin-top: 50px;
+            color: aliceblue;
+        }
+        .dias-faltando {
+            font-size: 40px; /* Tamanho da fonte da contagem */
+            margin-top: 10px; /* Espaço acima da contagem */
+            color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+    <h1>hoje é natal?</h1>
+    <div class="resultado" id="resultado"></div>
+    <div class="dias-faltando" id="dias-faltando"></div>
+    <script>
+        const hoje = new Date();
+        const natal = new Date(hoje.getFullYear(), 11, 25); // 25 de dezembro
+
+        let mensagem;
+        let diasFaltando = Math.ceil((natal - hoje) / (1000 * 60 * 60 * 24));
+
+        if (hoje.getMonth() === 11 && hoje.getDate() === 25) {
+            mensagem = "Hoje é Natal!";
+            diasFaltando = 0; // Se for Natal, faltam 0 dias
+        } else {
+            mensagem = "Hoje não";
+            if (diasFaltando < 0) {
+                // Se já passou o Natal, calcular para o próximo ano
+                natal.setFullYear(natal.getFullYear() + 1);
+                diasFaltando = Math.ceil((natal - hoje) / (1000 * 60 * 60 * 24));
+            }
+        }
+
+        document.getElementById("resultado").innerHTML = mensagem;
+        document.getElementById("dias-faltando").innerHTML = `Faltam ${diasFaltando} dias.`;
+    </script>
+</body>
+</html>
